@@ -127,21 +127,63 @@ class SortedArray
   def each &block
     # loop over all elements in @internal_arr
     # yield to each element
-
+     i=0
+     while i < internal_arr.length
+     yield @internal_arr[i]
+     i+=1
+     end
+     @internal_arr   
     # let's keep track of our index
   end
 
   def each_with_index &block
+       i = 0  
+      each do |v|
+        yield v, i
+        i+=1
+      end
+     @internal_arr
+     #@internal_arr.each { |x,y| x, y }
+     #yield x, y
+     #return @internal_arr
   end
 
   def map &block
+    array = []
+    each do |i|
+    result = yield i 
+    array.push result
+    end  
+    array
   end
 
   def map! &block
+    i = 0
+    each do |item| 
+    result = yield item
+    @internal_arr[i] = result
+    i += 1
+    
+    #i = 0
+    #each do |item|
+    #@internal_arr[item] + yield[i] 
+    #i += 1
   end
+  return @internal_arr
+          
+end
 
   def find &block
-  end
+    
+
+    
+    each do |item|
+    if yield(item) == true 
+     return item
+    end
+   end 
+      return nil  
+   end
 
   def inject acc=nil, &block
   end
